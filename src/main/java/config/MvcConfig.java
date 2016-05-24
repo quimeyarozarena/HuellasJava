@@ -1,13 +1,14 @@
 package config;
 
 import org.springframework.context.annotation.*;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
  
 @Configuration
-@ComponentScan(basePackages={"controller","service"})
+@ComponentScan(basePackages={"resource","service"})
 @EnableWebMvc
 public class MvcConfig extends WebMvcConfigurerAdapter {
 	 
@@ -43,5 +44,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         resource.setDefaultEncoding("UTF-8");
         return resource;
     }
+
  
 }

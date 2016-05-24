@@ -8,7 +8,7 @@ AbstractAnnotationConfigDispatcherServletInitializer {
 
 	@Override
 	protected Class<?>[] getServletConfigClasses() {
-	return new Class[] { MvcConfig.class };
+	return new Class[] { MvcConfig.class};
 	}
 	
 	@Override

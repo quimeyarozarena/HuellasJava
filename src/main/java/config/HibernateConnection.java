@@ -4,10 +4,13 @@ import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -21,11 +24,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration 
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages={"dao"})
-@ComponentScan(basePackages={"config"})
 @PropertySource(value = {"classpath:application.properties"}) 
 public class HibernateConnection {
 
-    /*@Value("${spring.datasource.driverClassName}")
+    @Value("${spring.datasource.driverClassName}")
     private String DB_DRIVER;
 
     @Value("${spring.datasource.password}")
@@ -47,23 +49,23 @@ public class HibernateConnection {
     private String HIBERNATE_HBM2DDL_AUTO;
 
     @Value("${spring.jpa.hibernate.entitymanager.packagesToScan}")
-    private String ENTITYMANAGER_PACKAGES_TO_SCAN;*/
+    private String ENTITYMANAGER_PACKAGES_TO_SCAN;
 
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/footprints");
-        dataSource.setUsername("root");
-        dataSource.setPassword("root");
+        dataSource.setDriverClassName(DB_DRIVER);
+        dataSource.setUrl(DB_URL);
+        dataSource.setUsername(DB_USERNAME);
+        dataSource.setPassword(DB_PASSWORD);
         return dataSource;
     }
     
     private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
-        hibernateProperties.put("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-        hibernateProperties.put("hibernate.show_sql", "true");
-        hibernateProperties.put("hibernate.hbm2ddl.auto", "validate");
+        hibernateProperties.put("hibernate.dialect", HIBERNATE_DIALECT);
+        hibernateProperties.put("hibernate.show_sql", HIBERNATE_SHOW_SQL);
+        hibernateProperties.put("hibernate.hbm2ddl.auto", HIBERNATE_HBM2DDL_AUTO);
         return hibernateProperties;        
     }
      
@@ -71,7 +73,7 @@ public class HibernateConnection {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
        em.setDataSource(dataSource());
-       em.setPackagesToScan(new String[] { "model" });
+       em.setPackagesToScan(new String[] { ENTITYMANAGER_PACKAGES_TO_SCAN});
   
        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
        em.setJpaVendorAdapter(vendorAdapter);
@@ -93,6 +95,11 @@ public class HibernateConnection {
        return new PersistenceExceptionTranslationPostProcessor();
     }
   
+    
+    @Bean 
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+    return new PropertySourcesPlaceholderConfigurer();
+    }
  
 
 }

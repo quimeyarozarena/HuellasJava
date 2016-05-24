@@ -1,9 +1,14 @@
 package service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,22 +31,13 @@ public class PersonServiceImpl implements PersonService {
 	@Transactional
 	@Override
 	public List<Person> getPersons() {
-			
-		/*List<Person> list = new ArrayList<>();
+
 		Iterable iterable = personDAO.findAll();
-		for (Object item : iterable) {
-			list.add((Person) item);
-	    }
-		
 		Stream s = StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterable.iterator(), Spliterator.ORDERED), false);
-		List listOfStream = (List) s.collect(Collectors.toList());
-		List listOfString  = (List) s.collect(Collectors.toCollection(ArrayList::new));
-
-
-		
-		return list;*/
-		
-		return null;
+		List<Person> persons = (List<Person>) s.collect(Collectors.toList());
+		s.close();
+	
+		return persons;
 	}
 
 	@Transactional

@@ -1,6 +1,8 @@
 package dao;
 
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +19,5 @@ public interface PersonDAO extends CrudRepository<Person, Long>{
 	
 	 @Query("select p from Person p where p.email = :email and p.password = :password")
 	 public Person login(@Param("email") String email, @Param("password") String password);
-
 	
 }
