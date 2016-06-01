@@ -7,7 +7,6 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
@@ -69,12 +68,14 @@ public class HibernateConnection {
         return hibernateProperties;        
     }
      
+    //da acceso completo a la configuración de EntityManagerFactory 
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
        LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
        em.setDataSource(dataSource());
        em.setPackagesToScan(new String[] { ENTITYMANAGER_PACKAGES_TO_SCAN});
   
+       //define hibernate como implementacion de jpa
        JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
        em.setJpaVendorAdapter(vendorAdapter);
        em.setJpaProperties(hibernateProperties());
@@ -90,6 +91,7 @@ public class HibernateConnection {
        return transactionManager;
     }
   
+    //Spring captura las excepciones de repositorios y las transforme en excepciones de Spring
     @Bean
     public PersistenceExceptionTranslationPostProcessor exceptionTranslation(){
        return new PersistenceExceptionTranslationPostProcessor();

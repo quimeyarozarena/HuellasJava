@@ -1,49 +1,16 @@
 package config;
 
 import org.springframework.context.annotation.*;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
-import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
- 
-@Configuration
+
+@Configuration  //indica que esta clase declara uno o más métodos anotados con @Bean, los cuales deben ser procesados por el contenedor de Spring para generar definiciones de los beans y peticiones de esos beans en tiempo de ejecución
 @ComponentScan(basePackages={"resource","service"})
 @EnableWebMvc
 public class MvcConfig extends WebMvcConfigurerAdapter {
-	 
-   /* @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/"); 
-         para css o js 	
-         <mvc:resources mapping="/resources/**" location="/resources/" />
-    }*/
- 
+
+	//Para poder delegar las peticiones que el framework no entienda al Servlet por default del servidor
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
- 
-    @Bean
-    public InternalResourceViewResolver jspViewResolver() {
-        InternalResourceViewResolver bean = new InternalResourceViewResolver();
-        bean.setPrefix("/WEB-INF/");
-        bean.setSuffix(".jsp");
-        return bean;
-    }
- 
-    @Bean(name = "multipartResolver")
-    public CommonsMultipartResolver getMultipartResolver() {
-        return new CommonsMultipartResolver();
-    }
- 
-    @Bean(name = "messageSource")
-    public ReloadableResourceBundleMessageSource getMessageSource() {
-        ReloadableResourceBundleMessageSource resource = new ReloadableResourceBundleMessageSource();
-        resource.setBasename("classpath:messages");
-        resource.setDefaultEncoding("UTF-8");
-        return resource;
-    }
-
- 
 }
