@@ -15,8 +15,7 @@ public class WebAppInitializer implements WebApplicationInitializer  {
         //Tell jersey-spring3 the context is already initialized
         container.setInitParameter("contextConfigLocation", "NOTNULL");
         AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
-        appContext.register(MvcConfig.class);
-        appContext.register(HibernateConnection.class, HibernateConnection.class);
+        appContext.register(MvcConfig.class, HibernateConfig.class, ServiceConfig.class);
         container.addListener(new ContextLoaderListener(appContext));
     }
 	

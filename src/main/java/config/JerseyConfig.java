@@ -10,7 +10,7 @@ import resource.PersonResourceImpl;
 
 
 @ApplicationPath("/*")
-public class JerseyServlet extends Application {
+public class JerseyConfig extends Application {
 	
     @Override
     public Set<Class<?>> getClasses() {

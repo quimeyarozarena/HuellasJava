@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages={"dao"})
 @PropertySource(value = {"classpath:application.properties"}) 
-public class HibernateConnection {
+public class HibernateConfig {
 
     @Value("${spring.datasource.driverClassName}")
     private String DB_DRIVER;
