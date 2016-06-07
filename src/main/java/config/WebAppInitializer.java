@@ -1,34 +1,23 @@
 package config;
 
-
-import java.util.EnumSet;
-
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
-import javax.servlet.ServletException;
 
-import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 
  
-public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer  {
+public class WebAppInitializer implements WebApplicationInitializer  {
 
-	@Override
-	protected Class<?>[] getServletConfigClasses() {
-	return new Class[] {MvcConfig.class};
-	}
-	
-	@Override
-	protected String[] getServletMappings() {
-	return new String[] { "/" };
-	}
-	
-	@Override
-	protected Class<?>[] getRootConfigClasses() {
-	return new Class[] {HibernateConnection.class};
-	}
+    @Override
+    public void onStartup(ServletContext container)
+    {
+        //Tell jersey-spring3 the context is already initialized
+        container.setInitParameter("contextConfigLocation", "NOTNULL");
+        AnnotationConfigWebApplicationContext appContext = new AnnotationConfigWebApplicationContext();
+        appContext.register(MvcConfig.class);
+        appContext.register(HibernateConnection.class, HibernateConnection.class);
+        container.addListener(new ContextLoaderListener(appContext));
+    }
 	
  }

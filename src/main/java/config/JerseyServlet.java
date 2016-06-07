@@ -1,11 +1,21 @@
 package config;
 
-//import org.glassfish.jersey.server.ResourceConfig;
+import java.util.HashSet;
+import java.util.Set;
 
-//public class JerseyServlet extends ResourceConfig {
-public class JerseyServlet{
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
 
-		public JerseyServlet() {
-			//this.packages("resource");
-		}
+import resource.PersonResourceImpl;
+
+
+@ApplicationPath("/*")
+public class JerseyServlet extends Application {
+	
+    @Override
+    public Set<Class<?>> getClasses() {
+        Set<Class<?>> classes = new HashSet<Class<?>>();
+        classes.add(PersonResourceImpl.class);
+        return classes;
+    }
 }
