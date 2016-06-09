@@ -31,6 +31,8 @@ public class PersonServiceImpl implements PersonService {
 	@Override
 	public List<Person> getPersons() {
 
+		int x = 0;
+		int xy = x;
 		Iterable iterable = personDAO.findAll();
 		Stream s = StreamSupport.stream(Spliterators.spliteratorUnknownSize(iterable.iterator(), Spliterator.ORDERED), false);
 		List<Person> persons = (List<Person>) s.collect(Collectors.toList());

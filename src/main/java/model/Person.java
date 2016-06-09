@@ -40,13 +40,13 @@ public class Person {
 	@Column(name = "locked", nullable = false)
 	private boolean locked;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person", cascade = { CascadeType.MERGE })
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = { CascadeType.MERGE })
 	private List<Lost> lostList;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person", cascade = { CascadeType.MERGE })
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = { CascadeType.MERGE })
 	private List<Comment> commentsList;
 	
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "person", cascade = { CascadeType.MERGE })
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "person", cascade = { CascadeType.MERGE })
 	private List<Additional> additionalList;
 	
 	public Person() {
