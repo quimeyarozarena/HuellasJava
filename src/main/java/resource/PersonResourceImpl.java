@@ -23,7 +23,6 @@ public class PersonResourceImpl implements PersonResource {
 	private PersonService personService;
 	
 	@POST
-	@Path("/signUp")
 	@Consumes({MediaType.APPLICATION_JSON})
 	@Produces({MediaType.TEXT_PLAIN})
 	@Override
@@ -32,7 +31,6 @@ public class PersonResourceImpl implements PersonResource {
 	}
 
 	@GET
-	@Path("/getPersons")
 	@Produces({MediaType.APPLICATION_JSON})
 	@Override
 	public List<Person> getPersons() {
@@ -41,7 +39,7 @@ public class PersonResourceImpl implements PersonResource {
 	}
 
 	@GET
-	@Path("/getById/{idPerson}")
+	@Path("/idPerson/{idPerson}")
 	@Produces({MediaType.APPLICATION_JSON})
 	@Override
 	public Person findById(@PathParam("idPerson") int idPerson) {
@@ -57,7 +55,7 @@ public class PersonResourceImpl implements PersonResource {
 
 
 	@POST
-	@Path("/login/{email}/{password}")
+	@Path("/email/{email}/password/{password}")
 	@Produces({MediaType.APPLICATION_JSON})
 	@Override
 	public Person login(@PathParam("email") String email, @PathParam("password") String password) {
